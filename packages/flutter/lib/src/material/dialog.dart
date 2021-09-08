@@ -19,7 +19,7 @@ import 'theme_data.dart';
 
 // Examples can assume:
 // enum Department { treasury, state }
-// BuildContext context;
+// late BuildContext context;
 
 const EdgeInsets _defaultInsetPadding = EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0);
 
@@ -58,7 +58,7 @@ class Dialog extends StatelessWidget {
   ///
   /// This sets the [Material.color] on this [Dialog]'s [Material].
   ///
-  /// If `null`, [ThemeData.cardColor] is used.
+  /// If `null`, [ThemeData.dialogBackgroundColor] is used.
   /// {@endtemplate}
   final Color? backgroundColor;
 
@@ -118,7 +118,7 @@ class Dialog extends StatelessWidget {
 
   /// The widget below this widget in the tree.
   ///
-  /// {@macro flutter.widgets.child}
+  /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget? child;
 
   static const RoundedRectangleBorder _defaultDialogShape =
@@ -143,7 +143,7 @@ class Dialog extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minWidth: 280.0),
             child: Material(
-              color: backgroundColor ?? dialogTheme.backgroundColor ?? Theme.of(context)!.dialogBackgroundColor,
+              color: backgroundColor ?? dialogTheme.backgroundColor ?? Theme.of(context).dialogBackgroundColor,
               elevation: elevation ?? dialogTheme.elevation ?? _defaultElevation,
               shape: shape ?? dialogTheme.shape ?? _defaultDialogShape,
               type: MaterialType.card,
@@ -451,7 +451,7 @@ class AlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
-    final ThemeData theme = Theme.of(context)!;
+    final ThemeData theme = Theme.of(context);
     final DialogTheme dialogTheme = DialogTheme.of(context);
 
     String? label = semanticLabel;
@@ -705,6 +705,9 @@ class SimpleDialogOption extends StatelessWidget {
 ///     case Department.state:
 ///       // ...
 ///     break;
+///     case null:
+///       // dialog dismissed
+///     break;
 ///   }
 /// }
 /// ```
@@ -807,7 +810,7 @@ class SimpleDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
-    final ThemeData theme = Theme.of(context)!;
+    final ThemeData theme = Theme.of(context);
 
     String? label = semanticLabel;
     if (title == null) {
@@ -973,12 +976,13 @@ Future<T?> showDialog<T>({
   Widget? child,
 }) {
   assert(child == null || builder == null);
+  assert(child != null || builder != null);
   assert(barrierDismissible != null);
   assert(useSafeArea != null);
   assert(useRootNavigator != null);
   assert(debugCheckHasMaterialLocalizations(context));
 
-  final CapturedThemes themes = InheritedTheme.capture(from: context, to: Navigator.of(context, rootNavigator: useRootNavigator)!.context);
+  final CapturedThemes themes = InheritedTheme.capture(from: context, to: Navigator.of(context, rootNavigator: useRootNavigator).context);
   return showGeneralDialog(
     context: context,
     pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
