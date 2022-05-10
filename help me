@@ -1,0 +1,14 @@
+Doctor summary (to see all details, run flutter doctor -v):
+[√] Flutter (Channel stable, 2.10.5, on Microsoft Windows [Version 10.0.22000.556], locale en-GB)
+[√] Android toolchain - develop for Android devices (Android SDK version 32.1.0-rc1)
+[√] Chrome - develop for the web
+[√] Visual Studio - develop for Windows (Visual Studio Community 2022 17.1.0)
+[√] Android Studio (version 2021.1)
+[√] VS Code (version 1.66.2)
+[√] Connected device (3 available)
+[!] HTTP Host Availability
+    X HTTP host https://cloud.google.com/ is not reachable. Reason: An error occurred while checking the HTTP host: The
+      semaphore timeout period has expired.
+
+
+! Doctor found issues in 1 category.
